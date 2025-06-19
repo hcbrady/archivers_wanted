@@ -24,26 +24,26 @@
 
 ## Local Setup
 
-1. **Clone the repository:**
+**1. Clone the repository:**
 
 ```bash
 git clone https://github.com/hcbrady/archivers_wanted.git
 cd archivers_wanted
 ```
 
-2. **Create and activate a virtual environment:**
+**2. Create and activate a virtual environment:**
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. **Install dependencies:**
+**3. Install dependencies:**
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Start PostgreSQL and create a database and user:**
+**4. Start PostgreSQL and create a database and user:**
 ```bash
 brew services start postgresql
 psql postgres
@@ -58,7 +58,7 @@ ALTER ROLE archivers_user SET timezone TO 'UTC';
 GRANT ALL PRIVILEGES ON DATABASE archivers_db TO archivers_user;
 \q
 ```
-5. **Set your environment variable:**
+**5. Set your environment variable:**
 ```bash
 echo "export DB_PASSWORD='your_password'" >> ~/.zshrc
 source ~/.zshrc
@@ -68,13 +68,13 @@ Alternatively, you can set this manually in your shell before each run:
 export DB_PASSWORD='your_password'
 ```
 
-6. **Run migrations and start the server:**
+**6. Run migrations and start the server:**
 ```bash
 python manage.py migrate
 python manage.py runserver
 ```
 
-7. **Visit: http://127.0.0.1:8000**
+**7. Visit: http://127.0.0.1:8000**
 
 
 
