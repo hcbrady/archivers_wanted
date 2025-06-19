@@ -43,18 +43,38 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-4. **Set up environment variables:**
+4. **Start PostgreSQL and create a database and user:**
 ```bash
-export DB_PASSWORD='your_postgres_password'
+brew services start postgresql
+psql postgres
+```
+Then, in the psql shell:
+```bash
+CREATE DATABASE archivers_db;
+CREATE USER archivers_user WITH PASSWORD 'your_password';
+ALTER ROLE archivers_user SET client_encoding TO 'utf8';
+ALTER ROLE archivers_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE archivers_user SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE archivers_db TO archivers_user;
+\q
+```
+5. **Set your environment variable:**
+```bash
+echo "export DB_PASSWORD='your_password'" >> ~/.zshrc
+source ~/.zshrc
+```
+Alternatively, you can set this manually in your shell before each run:
+```bash
+export DB_PASSWORD='your_password'
 ```
 
-5. **Run migrations and start the server:**
+6. **Run migrations and start the server:**
 ```bash
 python manage.py migrate
 python manage.py runserver
 ```
 
-6. **Visit: http://127.0.0.1:8000**
+7. **Visit: http://127.0.0.1:8000**
 
 
 
