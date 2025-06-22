@@ -3,7 +3,6 @@
 {% block title %}Participation Opportunities{% endblock %}
 
 {% block content %}
-    <h2 class="mb-3 text-center">Current Opportunities</h2>
     <ul class="list-group">
         {% for opportunity in opportunities %}
             <li class="list-group-item">
@@ -13,6 +12,7 @@
                     </a>
                 </h5>
                 <p>{{ opportunity.summary|truncatewords:25 }}</p>
+                <p>Tags: {{ opportunity.tag_list }}</p>
             </li>
         {% empty %}
             <li class="list-group-item text-center">No opportunities available right now.</li>
