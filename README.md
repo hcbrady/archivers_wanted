@@ -6,7 +6,7 @@
 
 - View a list of current contribution opportunities
 - Read detailed summaries for each opportunity
-- (PLANNED) Tagging system for filtering by skill and interest
+- Tagging system for filtering by skill and interest
 - (PLANNED) GitHub integration for auto-importing "good first issues"
 - (PLANNED) Community-submitted opportunities
 - (PLANNED) Subscription to skill and interest tags
