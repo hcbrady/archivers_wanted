@@ -3,6 +3,20 @@
 {% block title %}Participation Opportunities{% endblock %}
 
 {% block content %}
+<h4>Filter by tag:</h4>
+<ul class="list-inline">
+  <li class="list-inline-item">
+    <a href="{% url 'opportunity_list' %}">All</a>
+  </li>
+  {% for tag in tags %}
+    <li class="list-inline-item">
+      <a href="?tag={{ tag.name }}"
+         class="{% if selected_tag == tag.name %}fw-bold{% endif %}">
+         {{ tag.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
     <ul class="list-group">
         {% for opportunity in opportunities %}
             <li class="list-group-item">
