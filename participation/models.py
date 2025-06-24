@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -8,7 +9,7 @@ class Tag(models.Model):
 
 class Opportunity(models.Model):
     title = models.CharField(max_length=255)
-    summary = models.TextField()
+    summary = RichTextField()
     tags = models.ManyToManyField(Tag, related_name='opportunities')
 
     def __str__(self):
