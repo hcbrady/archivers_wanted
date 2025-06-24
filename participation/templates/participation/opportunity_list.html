@@ -17,20 +17,20 @@
     </li>
   {% endfor %}
 </ul>
-    <ul class="list-group">
-        {% for opportunity in opportunities %}
-            <li class="list-group-item">
-                <h5>
-                    <a href="{% url 'opportunity_detail' opportunity.pk %}">
-                        {{ opportunity.title }}
-                    </a>
-                </h5>
-                <p>{{ opportunity.summary|truncatewords:25 }}</p>
-                <p>Tags: {{ opportunity.tag_list }}</p>
-            </li>
-        {% empty %}
-            <li class="list-group-item text-center">No opportunities available right now.</li>
-        {% endfor %}
-    </ul>
+<ul class="list-group">
+  {% for opportunity in opportunities %}
+      <li class="list-group-item">
+          <h5>
+              <a href="{% url 'opportunity_detail' opportunity.pk %}">
+                  {{ opportunity.title }}
+              </a>
+          </h5>
+          <p>{{ opportunity.summary|safe|truncatewords:25 }}</p>
+          <p>Tags: {{ opportunity.tag_list }}</p>
+      </li>
+  {% empty %}
+  <li class="list-group-item text-center">No opportunities available right now.</li>
+  {% endfor %}
+</ul>
 {% endblock %}
 
