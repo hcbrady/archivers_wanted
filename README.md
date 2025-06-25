@@ -18,7 +18,7 @@
 - **Framework:** Django (Python)
 - **Database:** PostgreSQL
 - **Frontend:** Bootstrap
-- **Deployment:** Render (planned)
+- **Deployment:** Render
 
 ---
 
