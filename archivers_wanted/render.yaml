@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: archivers-wanted
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn archivers_wanted.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: archivers_wanted.settings
+      - key: DB_PASSWORD
+        sync: false
