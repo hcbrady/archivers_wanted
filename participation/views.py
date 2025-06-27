@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .models import Opportunity, Tag
 from .forms import OpportunityForm, TagForm
+from django.contrib.auth.decorators import login_required
 
 def opportunity_list(request):
     tag_name = request.GET.get('tag')
@@ -24,14 +25,10 @@ def opportunity_detail(request, pk):
     opportunity = get_object_or_404(Opportunity, pk=pk)
     return render(request, 'participation/opportunity_detail.html', {
         'opportunity': opportunity,
-        'access_key': request.GET.get('key')
     })
 
+@login_required
 def create_opportunity(request):
-    key = request.GET.get('key')
-    if key != settings.ADMIN_ACCESS_KEY:
-        return HttpResponseForbidden("You don't have permission to view this page.")
-
     if request.method == "POST":
         form = OpportunityForm(request.POST)
         if form.is_valid():
@@ -42,11 +39,8 @@ def create_opportunity(request):
 
     return render(request, 'participation/create_opportunity.html', {'form': form})
 
+@login_required
 def opportunity_edit(request, pk):
-    access_key = request.GET.get('key')
-    if access_key != settings.ADMIN_ACCESS_KEY:
-        return redirect('opportunity_list')
-    
     opportunity = get_object_or_404(Opportunity, pk=pk)
     if request.method == "POST":
         form = OpportunityForm(request.POST, instance=opportunity)
@@ -57,10 +51,8 @@ def opportunity_edit(request, pk):
         form = OpportunityForm(instance=opportunity)
     return render(request, 'participation/opportunity_form.html', {'form': form, 'edit': True})
 
+@login_required
 def opportunity_delete(request, pk):
-    access_key = request.GET.get('key')
-    if access_key != settings.ADMIN_ACCESS_KEY:
-        return redirect('opportunity_list')
 
     opportunity = get_object_or_404(Opportunity, pk=pk)
     if request.method == "POST":
@@ -69,10 +61,8 @@ def opportunity_delete(request, pk):
         return redirect('opportunity_list')
     return render(request, 'participation/opportunity_confirm_delete.html', {'opportunity': opportunity})
 
+@login_required
 def create_tag(request):
-    key = request.GET.get('key')
-    if key != settings.ADMIN_ACCESS_KEY:
-        return HttpResponseForbidden("You don't have permission to view this page.")
     tags = Tag.objects.all()
     if request.method == "POST":
 

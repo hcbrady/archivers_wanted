@@ -64,7 +64,7 @@ ROOT_URLCONF = 'archivers_wanted.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'archivers_wanted/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,3 +135,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ADMIN_ACCESS_KEY = os.environ.get("ADMIN_ACCESS_KEY")
+
+LOGIN_REDIRECT_URL = '/create/'  # If you want logged-in users to land on the create opportunity page
+LOGOUT_REDIRECT_URL = '/'

@@ -1,13 +1,16 @@
 {% extends 'participation/base.html' %}
-{% load crispy_forms_tags %}
-
-{% block content %}
-  <div class="container mt-4">
-    <h2 class="mb-4">Create Opportunity</h2>
-    <form method="POST">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <button type="submit" class="btn btn-primary">Create</button>
-    </form>
-  </div>
-{% endblock %}
+{% if user.is_authenticated %}
+    {% load crispy_forms_tags %}
+    {% block content %}
+    <div class="container mt-4">
+        <h2 class="mb-4">Create Opportunity</h2>
+        <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+    </div>
+    {% endblock %}
+{% else %}
+  <a href="{% url 'login' %}">Admin Login</a>
+{% endif %}

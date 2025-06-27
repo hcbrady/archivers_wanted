@@ -10,6 +10,8 @@
             <a href="/" class="btn btn-secondary mt-3">← Back to all opportunities</a>
         </div>
     </div>
-<a href="{% url 'opportunity_edit' opportunity.pk %}?key={{ access_key }}">Edit</a>
-<a href="{% url 'opportunity_delete' opportunity.pk %}?key={{ access_key }}">Delete</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'opportunity_edit' opportunity.pk %}">Edit</a>
+        <a href="{% url 'opportunity_delete' opportunity.pk %}">Delete</a>
+    {% endif %}
 {% endblock %}
