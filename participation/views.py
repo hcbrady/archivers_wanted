@@ -22,7 +22,10 @@ def opportunity_list(request):
 
 def opportunity_detail(request, pk):
     opportunity = get_object_or_404(Opportunity, pk=pk)
-    return render(request, 'participation/opportunity_detail.html', {'opportunity': opportunity})
+    return render(request, 'participation/opportunity_detail.html', {
+        'opportunity': opportunity,
+        'access_key': request.GET.get('key')
+    })
 
 def create_opportunity(request):
     key = request.GET.get('key')
@@ -38,6 +41,33 @@ def create_opportunity(request):
         form = OpportunityForm()
 
     return render(request, 'participation/create_opportunity.html', {'form': form})
+
+def opportunity_edit(request, pk):
+    access_key = request.GET.get('key')
+    if access_key != settings.ADMIN_ACCESS_KEY:
+        return redirect('opportunity_list')
+    
+    opportunity = get_object_or_404(Opportunity, pk=pk)
+    if request.method == "POST":
+        form = OpportunityForm(request.POST, instance=opportunity)
+        if form.is_valid():
+            form.save()
+            return redirect('opportunity_detail', pk=opportunity.pk)
+    else:
+        form = OpportunityForm(instance=opportunity)
+    return render(request, 'participation/opportunity_form.html', {'form': form, 'edit': True})
+
+def opportunity_delete(request, pk):
+    access_key = request.GET.get('key')
+    if access_key != settings.ADMIN_ACCESS_KEY:
+        return redirect('opportunity_list')
+
+    opportunity = get_object_or_404(Opportunity, pk=pk)
+    if request.method == "POST":
+        print("Post")
+        opportunity.delete()
+        return redirect('opportunity_list')
+    return render(request, 'participation/opportunity_confirm_delete.html', {'opportunity': opportunity})
 
 def create_tag(request):
     key = request.GET.get('key')

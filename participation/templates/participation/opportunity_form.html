@@ -1,0 +1,13 @@
+{% extends 'participation/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>{{ edit|default_if_none:"Create" }} Opportunity</h2>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">{{ edit|yesno:"Update,Create" }}</button>
+    </form>
+  </div>
+{% endblock %}

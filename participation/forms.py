@@ -8,7 +8,7 @@ class OpportunityForm(forms.ModelForm):
         queryset=Tag.objects.all(),
         widget=forms.SelectMultiple(attrs={
             'class': 'form-select',
-            'multiple': 'multiple'  # <-- Ensure this is set
+            'multiple': 'multiple'
         }),
         required=False
     )
