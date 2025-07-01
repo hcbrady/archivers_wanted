@@ -19,11 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$^*qnvi-%=gksl6wsq2@3=02e%#rd!l_0n=##wb9de!f2u+p0+'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = [
     'archivers-wanted.onrender.com',
@@ -135,7 +133,5 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ADMIN_ACCESS_KEY = os.environ.get("ADMIN_ACCESS_KEY")
-
-LOGIN_REDIRECT_URL = '/create/'  # If you want logged-in users to land on the create opportunity page
+LOGIN_REDIRECT_URL = '/create/'
 LOGOUT_REDIRECT_URL = '/'
