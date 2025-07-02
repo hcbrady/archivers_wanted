@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.urls import reverse
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -17,6 +18,9 @@ class Opportunity(models.Model):
     
     def tag_list(self):
         return ", ".join(tag.name for tag in self.tags.all())
+    
+    def get_absolute_url(self):
+        return reverse('opportunity_detail', kwargs={'pk': self.pk})
 
 class TagSubscription(models.Model):
     email = models.EmailField()

@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'participation',
+    'participation.apps.ParticipationConfig',
     'github_integration',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -145,3 +145,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = os.getenv('SENDGRID')
 DEFAULT_FROM_EMAIL = os.getenv('FROM_EMAIL')
+
+SITE_DOMAIN = os.getenv('DOMAIN')

@@ -1,0 +1,7 @@
+New Participation Opportunity at the Internet Archive: {{ opportunity.title }}
+
+{{ opportunity.summary }}
+
+View Opportunity: {{ domain }}{{ opportunity.get_absolute_url }}
+
+You are receiving this email because you subscribed to the following tags on Archivers Wanted: {{ tags|join:", " }}.
