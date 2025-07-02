@@ -20,3 +20,14 @@ class TagForm(forms.ModelForm):
     class Meta:
         model = Tag
         fields = ['name']
+
+class TagSubscriptionForm(forms.Form):
+    email = forms.EmailField()
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-select',
+            'multiple': 'multiple'
+        }),
+        required=False
+    )

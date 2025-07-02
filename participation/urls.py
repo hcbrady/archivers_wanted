@@ -8,4 +8,6 @@ urlpatterns = [
     path('opportunity/<int:pk>/edit/', views.opportunity_edit, name='opportunity_edit'),
     path('opportunity/<int:pk>/delete/', views.opportunity_delete, name='opportunity_delete'),
     path('create-tag/', views.create_tag, name='create_tag'),
+    path('subscribe/', views.subscribe, name='subscribe'),
+    path('subscription_list/', views.subscription_list, name='subscroption_list')
 ]

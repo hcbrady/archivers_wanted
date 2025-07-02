@@ -1,11 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Opportunity, Tag
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
-from .models import Opportunity, Tag
-from .forms import OpportunityForm, TagForm
+from .models import Opportunity, Tag, TagSubscription
+from .forms import OpportunityForm, TagForm, TagSubscriptionForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def opportunity_list(request):
     tag_name = request.GET.get('tag')
@@ -78,3 +79,23 @@ def create_tag(request):
         'tags': tags,
         }
     )
+
+def subscribe(request):
+    if request.method == 'POST':
+        form = TagSubscriptionForm(request.POST)
+        if form.is_valid():
+            subscription = TagSubscription.objects.create(email=form.cleaned_data['email'])
+            subscription.tags.set(form.cleaned_data['tags'])  # assign ManyToMany tags
+            subscription.save()
+            messages.success(request, "You've been subscribed!")
+            return redirect('subscribe')
+    else:
+        form = TagSubscriptionForm()
+    return render(request, 'participation/subscribe.html', {'form': form})
+
+@login_required
+def subscription_list(request):
+    subscribers = TagSubscription.objects.all()
+    return render(request, 'participation/subscription_list.html', {
+        'subscribers': subscribers
+    })

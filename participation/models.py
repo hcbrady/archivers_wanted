@@ -17,3 +17,12 @@ class Opportunity(models.Model):
     
     def tag_list(self):
         return ", ".join(tag.name for tag in self.tags.all())
+
+class TagSubscription(models.Model):
+    email = models.EmailField()
+    tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return f"{self.email} subscribed to {[tag.name for tag in self.tags.all()]}"
+    def tag_list(self):
+        return ", ".join(tag.name for tag in self.tags.all())

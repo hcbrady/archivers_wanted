@@ -1,0 +1,21 @@
+{% extends 'participation/base.html' %}
+{% if user.is_authenticated %}
+    {% block title %}Subscribers{% endblock %}
+    {% block content %}
+    <ul class="list-group">
+    {% for subscriber in subscribers %}
+        <li class="list-group-item">
+            <h5>
+                {{ subscriber.email }}
+            </h5>
+            <p>{{ subscriber.summary|safe|truncatewords:25 }}</p>
+            <p>Tags: {{ subscriber.tag_list }}</p>
+        </li>
+    {% empty %}
+    <li class="list-group-item text-center">No subscribers available right now.</li>
+    {% endfor %}
+    </ul>
+    {% endblock %}
+{% else %}
+  <a href="{% url 'login' %}">Admin Login</a>
+{% endif %}
