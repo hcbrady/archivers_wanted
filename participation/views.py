@@ -1,15 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Opportunity, Tag
 from django.conf import settings
-from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from .models import Opportunity, Tag, TagSubscription
 from .forms import OpportunityForm, TagForm, TagSubscriptionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
-from django.shortcuts import render
-from .models import Opportunity, Tag
 
 def opportunity_list(request):
     selected_tag_names = request.GET.getlist('tag')  # This allows multiple ?tag=foo&tag=bar
