@@ -3,20 +3,28 @@
 {% block title %}Participation Opportunities{% endblock %}
 
 {% block content %}
-<h4>Filter by tag:</h4>
-<ul class="list-inline">
-  <li class="list-inline-item">
-    <a href="{% url 'opportunity_list' %}">All</a>
-  </li>
-  {% for tag in tags %}
-    <li class="list-inline-item">
-      <a href="?tag={{ tag.name }}"
-         class="{% if selected_tag == tag.name %}fw-bold{% endif %}">
-         {{ tag.name }}
-      </a>
-    </li>
+<h4>Filter:</h4>
+<div class="row mb-3">
+  {% for group in tag_groups %}
+    <div class="col-md-4">
+      <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          {{ group.name }}
+        </button>
+        <ul class="dropdown-menu w-100">
+          {% for tag in group.tags %}
+            <li>
+              <a class="dropdown-item {% if selected_tag == tag.name %}fw-bold{% endif %}" href="?tag={{ tag.name }}">
+                {{ tag.name }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
   {% endfor %}
-</ul>
+</div>
+
 <ul class="list-group">
   {% for opportunity in opportunities %}
       <li class="list-group-item">

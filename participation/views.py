@@ -9,18 +9,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 def opportunity_list(request):
-    tag_name = request.GET.get('tag')
-    if tag_name:
-        opportunities = Opportunity.objects.filter(tags__name=tag_name)
-    else:
-        opportunities = Opportunity.objects.all()
-    
-    tags = Tag.objects.all()
-    return render(request, 'participation/opportunity_list.html', {
-        'opportunities': opportunities,
-        'tags': tags,
-        'selected_tag': tag_name,
-    })
+    selected_tag = request.GET.get('tag')
+    opportunities = Opportunity.objects.all()
+
+    if selected_tag:
+        opportunities = opportunities.filter(tags__name=selected_tag)
+
+    tag_groups = [
+        {"name": "Project", "tags": Tag.objects.filter(category="project")},
+        {"name": "Skill", "tags": Tag.objects.filter(category="skill")},
+        {"name": "Interest", "tags": Tag.objects.filter(category="interest")},
+    ]
+
+    context = {
+        "opportunities": opportunities,
+        "selected_tag": selected_tag,
+        "tag_groups": tag_groups,
+    }
+    return render(request, "participation/opportunity_list.html", context)
 
 def opportunity_detail(request, pk):
     opportunity = get_object_or_404(Opportunity, pk=pk)

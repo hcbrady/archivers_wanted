@@ -3,7 +3,13 @@ from ckeditor.fields import RichTextField
 from django.urls import reverse
 
 class Tag(models.Model):
+    CATEGORY_CHOICES = [
+        ('project', 'Project'),
+        ('skill', 'Skill'),
+        ('interest', 'Interest'),
+    ]
     name = models.CharField(max_length=50, unique=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='interest')
 
     def __str__(self):
         return self.name
