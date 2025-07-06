@@ -1,0 +1,16 @@
+{% extends 'participation/base.html' %}
+{% if user.is_authenticated %}
+    {% block content %}
+    <div class="container mt-4">
+        <h2>Confirm Delete</h2>
+        <p>Are you sure you want to delete <strong>{{ tag.title }}</strong>?</p>
+        <form method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Yes, delete</button>
+        <a href="{% url 'tag_title' tag.pk %}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+    {% endblock %}
+{% else %}
+  <a href="{% url 'login' %}">Admin Login</a>
+{% endif %}

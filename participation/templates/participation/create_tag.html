@@ -12,7 +12,11 @@
         </form><br>
         <ul class="list-group"></ul>
             {% for tag in tags %}
-                <li class="list-group-item"> <h5>{{ tag.name }}</h5> </li>
+                <li class="list-group-item"> 
+                    <h5>{{ tag.name }} ({{ tag.category }})</h5> 
+                    <a href="{% url 'tag_edit' tag.pk %}">Edit</a>
+                    <a href="{% url 'tag_delete' tag.pk %}">Delete</a>
+                </li>
             {% empty %}
                 <li class="list-group-item text-center">No tags available right now.</li>
             {% endfor %}

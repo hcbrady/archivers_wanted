@@ -101,6 +101,27 @@ def create_tag(request):
         }
     )
 
+@login_required
+def tag_edit(request, pk):
+    tag = get_object_or_404(Tag, pk=pk)
+    if request.method == "POST":
+        form = TagForm(request.POST, instance=tag)
+        if form.is_valid():
+            form.save()
+            return redirect('create_tag')
+    else:
+        form = TagForm(instance=tag)
+    return render(request, 'participation/tag_form.html', {'form': form, 'edit': True})
+
+
+@login_required
+def tag_delete(request, pk):
+    tag = get_object_or_404(Tag, pk=pk)
+    if request.method == "POST":
+        tag.delete()
+        return redirect('create_tag')
+    return render(request, 'participation/tag_confirm_delete.html', {'tag': tag})
+
 def subscribe(request):
     if request.method == 'POST':
         form = TagSubscriptionForm(request.POST)
