@@ -60,7 +60,7 @@ class Command(BaseCommand):
             },
         )
         if language:
-            tag, _ = Tag.objects.get_or_create(name=language)
+            tag, _ = Tag.objects.get_or_create(name=language, defaults={'category': 'Skill'})
             opportunity.tags.add(tag)
         if created:
             self.stdout.write(f"Created Opportunity for repo: {title}")
