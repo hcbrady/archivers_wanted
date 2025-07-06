@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4">
-    <h2 class="mb-4">Subscribe to GitHub Issues by Tag</h2>
+    <h5 class="mb-4">Select tags you are interested in, and we'll email you when new participation opportunities that fall under the tags are made available. </h5>
     <form method="POST">
     {% csrf_token %}
     {{ form|crispy }}
