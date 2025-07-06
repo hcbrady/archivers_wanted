@@ -1,4 +1,5 @@
 {% extends 'participation/base.html' %}
+{% load custom_filters %}
 
 {% block title %}Participation Opportunities{% endblock %}
 
@@ -13,11 +14,23 @@
         </button>
         <ul class="dropdown-menu w-100">
           {% for tag in group.tags %}
-            <li>
-              <a class="dropdown-item {% if selected_tag == tag.name %}fw-bold{% endif %}" href="?tag={{ tag.name }}">
-                {{ tag.name }}
-              </a>
-            </li>
+            {% with tag.name as tag_name %}
+              {% if tag_name in selected_tags %}
+                {# Tag is selected — provide a link to remove it #}
+                <li>
+                  <a href="?{% for t in selected_tags|without:tag_name %}tag={{ t }}&{% endfor %}">
+                    ✅ {{ tag_name }}
+                  </a>
+                </li>
+              {% else %}
+                {# Tag is not selected — provide a link to add it #}
+                <li>
+                  <a href="?{% for t in selected_tags %}tag={{ t }}&{% endfor %}tag={{ tag_name }}">
+                    {{ tag_name }}
+                  </a>
+                </li>
+              {% endif %}
+            {% endwith %}
           {% endfor %}
         </ul>
       </div>

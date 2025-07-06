@@ -8,25 +8,38 @@ from .forms import OpportunityForm, TagForm, TagSubscriptionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+from django.shortcuts import render
+from .models import Opportunity, Tag
+
 def opportunity_list(request):
-    selected_tag = request.GET.get('tag')
+    selected_tag_names = request.GET.getlist('tag')  # This allows multiple ?tag=foo&tag=bar
     opportunities = Opportunity.objects.all()
 
-    if selected_tag:
-        opportunities = opportunities.filter(tags__name=selected_tag)
+    if selected_tag_names:
+        for tag_name in selected_tag_names:
+            opportunities = opportunities.filter(tags__name=tag_name)
+
+    tags = Tag.objects.all()
+    selected_tags = Tag.objects.filter(name__in=selected_tag_names)
+
+    # Organize tags by category
+    project_tags = tags.filter(category='Project')
+    skill_tags = tags.filter(category='Skill')
+    interest_tags = tags.filter(category='Interest')
 
     tag_groups = [
-        {"name": "Project", "tags": Tag.objects.filter(category="project")},
-        {"name": "Skill", "tags": Tag.objects.filter(category="skill")},
-        {"name": "Interest", "tags": Tag.objects.filter(category="interest")},
+        {'name': 'Project', 'tags': project_tags},
+        {'name': 'Skill', 'tags': skill_tags},
+        {'name': 'Interest', 'tags': interest_tags},
     ]
 
-    context = {
-        "opportunities": opportunities,
-        "selected_tag": selected_tag,
-        "tag_groups": tag_groups,
-    }
-    return render(request, "participation/opportunity_list.html", context)
+    return render(request, 'participation/opportunity_list.html', {
+        'opportunities': opportunities.distinct(),
+        'tags': tags,
+        'selected_tags': selected_tag_names,
+        'tag_groups': tag_groups,
+    })
+
 
 def opportunity_detail(request, pk):
     opportunity = get_object_or_404(Opportunity, pk=pk)
