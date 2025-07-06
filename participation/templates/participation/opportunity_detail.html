@@ -7,6 +7,7 @@
         <div class="card-body">
             <h2 class="card-title">{{ opportunity.title }}</h2>
             <p class="card-text">{{ opportunity.summary | safe }}</p>
+            <p>Tags: {{ opportunity.tag_list }}</p>
             <a href="/" class="btn btn-secondary mt-3">← Back to all opportunities</a>
         </div>
     </div>
