@@ -5,31 +5,38 @@ from .models import Opportunity, Tag, TagSubscription
 from .forms import OpportunityForm, TagForm, TagSubscriptionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 def opportunity_list(request):
-    selected_tag_names = request.GET.getlist('tag')  # This allows multiple ?tag=foo&tag=bar
+    selected_tag_names = request.GET.getlist('tag')
     opportunities = Opportunity.objects.all()
 
     if selected_tag_names:
         for tag_name in selected_tag_names:
             opportunities = opportunities.filter(tags__name=tag_name)
 
+    opportunities = opportunities.distinct()
+
+    paginator = Paginator(opportunities, 10)  # 10 opportunities per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     tags = Tag.objects.all()
     selected_tags = Tag.objects.filter(name__in=selected_tag_names)
 
-    # Organize tags by category
     project_tags = tags.filter(category='project')
     skill_tags = tags.filter(category='skill')
     interest_tags = tags.filter(category='interest')
 
     tag_groups = [
-        {'name': 'project', 'tags': project_tags},
-        {'name': 'skill', 'tags': skill_tags},
-        {'name': 'interest', 'tags': interest_tags},
+        {'name': 'Project', 'tags': project_tags},
+        {'name': 'Skill', 'tags': skill_tags},
+        {'name': 'Interest', 'tags': interest_tags},
     ]
 
     return render(request, 'participation/opportunity_list.html', {
-        'opportunities': opportunities.distinct(),
+        'page_obj': page_obj,
+        'opportunities': page_obj.object_list,
         'tags': tags,
         'selected_tags': selected_tag_names,
         'tag_groups': tag_groups,
