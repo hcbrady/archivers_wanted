@@ -7,9 +7,9 @@
 - View a list of current contribution opportunities
 - Read detailed summaries for each opportunity
 - Tagging system for filtering by skill and interest
-- (PLANNED) GitHub integration for auto-importing "good first issues"
+- GitHub integration for auto-importing Internet Archive repos with open issues
+- Subscription to skill, interest, and project tags
 - (PLANNED) Community-submitted opportunities
-- (PLANNED) Subscription to skill and interest tags
 
 ---
 
