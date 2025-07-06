@@ -18,14 +18,14 @@ def opportunity_list(request):
     selected_tags = Tag.objects.filter(name__in=selected_tag_names)
 
     # Organize tags by category
-    project_tags = tags.filter(category='Project')
-    skill_tags = tags.filter(category='Skill')
-    interest_tags = tags.filter(category='Interest')
+    project_tags = tags.filter(category='project')
+    skill_tags = tags.filter(category='skill')
+    interest_tags = tags.filter(category='interest')
 
     tag_groups = [
-        {'name': 'Project', 'tags': project_tags},
-        {'name': 'Skill', 'tags': skill_tags},
-        {'name': 'Interest', 'tags': interest_tags},
+        {'name': 'project', 'tags': project_tags},
+        {'name': 'skill', 'tags': skill_tags},
+        {'name': 'interest', 'tags': interest_tags},
     ]
 
     return render(request, 'participation/opportunity_list.html', {
