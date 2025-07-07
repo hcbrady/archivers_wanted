@@ -1,6 +1,4 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.conf import settings
-from django.http import HttpResponseForbidden
 from .models import Opportunity, Tag, TagSubscription
 from .forms import OpportunityForm, TagForm, TagSubscriptionForm
 from django.contrib.auth.decorators import login_required
@@ -17,12 +15,11 @@ def opportunity_list(request):
 
     opportunities = opportunities.distinct()
 
-    paginator = Paginator(opportunities, 10)  # 10 opportunities per page
+    paginator = Paginator(opportunities, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     tags = Tag.objects.all()
-    selected_tags = Tag.objects.filter(name__in=selected_tag_names)
 
     project_tags = tags.filter(category='project')
     skill_tags = tags.filter(category='skill')
@@ -127,13 +124,16 @@ def subscribe(request):
         form = TagSubscriptionForm(request.POST)
         if form.is_valid():
             subscription = TagSubscription.objects.create(email=form.cleaned_data['email'])
-            subscription.tags.set(form.cleaned_data['tags'])  # assign ManyToMany tags
+            subscription.tags.set(form.cleaned_data['tags'])
             subscription.save()
             messages.success(request, "You've been subscribed!")
             return redirect('subscribe')
     else:
         form = TagSubscriptionForm()
     return render(request, 'participation/subscribe.html', {'form': form})
+
+def about(request):
+    return render(request, 'participation/about.html')
 
 @login_required
 def subscription_list(request):

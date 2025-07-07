@@ -11,5 +11,6 @@ urlpatterns = [
     path('tag/<int:pk>/edit/', views.tag_edit, name='tag_edit'),
     path('tag/<int:pk>/delete/', views.tag_delete, name='tag_delete'),
     path('subscribe/', views.subscribe, name='subscribe'),
-    path('subscription_list/', views.subscription_list, name='subscription_list')
+    path('subscription_list/', views.subscription_list, name='subscription_list'),
+    path('about/', views.about, name='about'),
 ]
