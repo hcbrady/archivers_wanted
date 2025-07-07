@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Opportunity, Tag, TagSubscription
-from .forms import OpportunityForm, TagForm, TagSubscriptionForm
+from .forms import OpportunityForm, TagForm, TagSubscriptionForm, RecommendForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import render_to_string
 
 def opportunity_list(request):
     selected_tag_names = request.GET.getlist('tag')
@@ -87,7 +90,7 @@ def create_tag(request):
 
         form = TagForm(request.POST)
         if form.is_valid():
-            tag = form.save()
+            form.save()
             return redirect('participation/opportunity_list.html')
     else:
         form = TagForm()
@@ -131,6 +134,36 @@ def subscribe(request):
     else:
         form = TagSubscriptionForm()
     return render(request, 'participation/subscribe.html', {'form': form})
+
+def recommend(request):
+    if request.method == "POST":
+        form = RecommendForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            text = form.cleaned_data['text']
+            email = form.cleaned_data['email']
+            context = {
+            'title': title,
+            'text': text,
+            'email': email,
+        }
+            subject = f"New recommendation for an opportunity: {title}"
+            from_email = None  # uses DEFAULT_FROM_EMAIL
+            to = [settings.DEFAULT_FROM_EMAIL]
+
+            text_body = render_to_string('emails/recommendation.txt', context)
+            html_body = render_to_string('emails/recommendation.html', context)
+
+            email = EmailMultiAlternatives(subject, text_body, from_email, to)
+            email.attach_alternative(html_body, "text/html")
+            email.send()
+            
+            messages.success(request, "Your recommendation has been received!")
+            return redirect('opportunity_list')
+    else:
+        form = RecommendForm()
+
+    return render(request, 'participation/recommend.html', {'form': form})
 
 def about(request):
     return render(request, 'participation/about.html')

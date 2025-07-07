@@ -13,4 +13,5 @@ urlpatterns = [
     path('subscribe/', views.subscribe, name='subscribe'),
     path('subscription_list/', views.subscription_list, name='subscription_list'),
     path('about/', views.about, name='about'),
+    path('recommend/', views.recommend, name='recommend'),
 ]

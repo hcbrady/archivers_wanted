@@ -6,7 +6,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 
 @receiver(m2m_changed, sender=Opportunity.tags.through)
-def notify_subscribers_on_tag_added(sender, instance, action, **kwargs):
+def notify_subscribers_on_tag_added(instance, action, **kwargs):
     if action != "post_add":
         return  # Only trigger when tags are added
 

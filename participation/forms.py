@@ -31,3 +31,8 @@ class TagSubscriptionForm(forms.Form):
         }),
         required=False
     )
+
+class RecommendForm(forms.Form):
+    title = forms.CharField()
+    email = forms.EmailField()
+    text = forms.CharField(widget=CKEditorWidget())

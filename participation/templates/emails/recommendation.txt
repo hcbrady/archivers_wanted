@@ -1,0 +1,5 @@
+New Recommendation: {{ title }}
+
+{{ text|safe }}
+
+Recommended by: {{ email }}
