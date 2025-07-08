@@ -9,7 +9,7 @@
 - Tagging system for filtering by skill and interest
 - GitHub integration for auto-importing Internet Archive repos with open issues
 - Subscription to skill, interest, and project tags
-- (PLANNED) Community-submitted opportunities
+- Community-submitted opportunities
 
 ---
 
