@@ -19,10 +19,16 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+class OpportunityManager(models.Manager):
+    def not_defunct(self):
+        return self.filter(defunct=False)
+
 class Opportunity(models.Model):
     title = models.CharField(max_length=255)
     summary = RichTextField()
     tags = models.ManyToManyField(Tag, related_name='opportunities')
+    defunct = models.BooleanField(default=False)
+    objects = OpportunityManager()
 
     def __str__(self):
         return self.title

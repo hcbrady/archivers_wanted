@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 def opportunity_list(request):
     selected_tag_names = request.GET.getlist('tag')
-    opportunities = Opportunity.objects.all()
+    opportunities = Opportunity.objects.not_defunct().all()
 
     if selected_tag_names:
         for tag_name in selected_tag_names:

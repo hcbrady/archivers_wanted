@@ -14,7 +14,7 @@ class OpportunityForm(forms.ModelForm):
     )
     class Meta:
         model = Opportunity
-        fields = ['title', 'summary', 'tags']
+        fields = ['title', 'summary', 'tags', 'defunct']
 
 class TagForm(forms.ModelForm):
     class Meta:
