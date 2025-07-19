@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <div class="container mt-4">
-    <h5 class="mb-4">Did we miss something? Recommend a participation opportunity to add below.</h5>
+    <h5 class="mb-4">Did we miss something? Recommend a participation opportunity to add.</h5>
     <form method="POST">
     {% csrf_token %}
     {{ form|crispy }}
